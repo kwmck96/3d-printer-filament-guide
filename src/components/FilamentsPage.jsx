@@ -73,7 +73,7 @@ function FilamentDetail({ f, unit, navigate, compat }) {
           <HeatRuler kind="bed" label="Bed" range={f.temps.bed} unit={unit} />
         </div>
         <p className="fine">
-          The range is the overlap of the cited manufacturers’ recommendations. The starting point is an editorial suggestion; tune from it with a temperature tower, and follow your spool’s label when it disagrees.
+          The range is the tightest window the cited sources support; where brands disagree, the notes below say what each lists. The starting point is an editorial suggestion. Tune from it with a temperature tower, and follow your spool’s label when it disagrees.
         </p>
       </section>
 

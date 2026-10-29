@@ -45,7 +45,7 @@ export const glossary = {
   zhop: {
     name: 'Z hop',
     unintuitive: true,
-    prusa: '"Lift Z" (Printer settings → Extruder)',
+    prusa: '"Lift height" (Printer settings → Extruder → Travel lift; called "Lift Z" before 2.7)',
     orca: '"Z hop"',
     cura: '"Z Hop When Retracted"',
   },
@@ -66,7 +66,7 @@ export const glossary = {
   pa: {
     name: 'Pressure advance',
     unintuitive: true,
-    prusa: '"Pressure advance" (newer releases) or firmware Linear Advance (M900)',
+    prusa: 'No slicer field; set M572 (or M900 Linear Advance) in Filament → Custom G-code',
     orca: '"Pressure advance" (Filament settings) plus its calibration tool',
     cura: 'No built-in setting; set in printer firmware',
   },
@@ -102,7 +102,7 @@ export const glossary = {
     name: 'Bridge fan speed',
     unintuitive: true,
     prusa: '"Bridges fan speed"',
-    orca: '"Overhang fan speed" (also applies to bridges)',
+    orca: '"Overhangs and external bridges fan speed" (enable "Force cooling for overhangs and bridges")',
     cura: '"Bridge Fan Speed" (Experimental → Enable Bridge Settings)',
   },
   inputshaping: {
@@ -113,7 +113,7 @@ export const glossary = {
     cura: 'Not a slicer setting; configured in firmware',
   },
   retraction: { name: 'Retraction', prusa: '"Retraction length"', orca: '"Retraction length"', cura: '"Retraction Distance"' },
-  fan: { name: 'Part cooling fan', prusa: '"Fan speed" (Filament → Cooling)', orca: '"Part cooling fan"', cura: '"Fan Speed"' },
+  fan: { name: 'Part cooling fan', prusa: '"Fan speed" (Filament → Cooling)', orca: 'Min/Max "Fan speed" (Filament → Cooling → Part cooling fan)', cura: '"Fan Speed"' },
   speed: { name: 'Print speed', prusa: 'Print settings → Speed', orca: 'Speed tab', cura: '"Print Speed"' },
   brim: { name: 'Brim', prusa: '"Brim width"', orca: '"Brim type / width"', cura: 'Build Plate Adhesion → Brim' },
   raft: { name: 'Raft', prusa: '"Raft layers"', orca: '"Raft layers"', cura: 'Build Plate Adhesion → Raft' },

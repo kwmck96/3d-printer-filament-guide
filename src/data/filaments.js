@@ -1,8 +1,10 @@
 // Filament reference data.
 //
-// Temperatures: `min`/`max` are the tightest range supported by the cited
-// manufacturer data (usually the overlap between brands). `sweet` is an
-// editorial starting point inside that range, not a manufacturer figure.
+// Temperatures: `min`/`max` is the tightest window the cited sources support:
+// the overlap between brands where one exists. Where brands genuinely disagree,
+// the range follows the most widely cited source and requirements.notes says
+// what the others list. `sweet` is an editorial starting point inside the
+// range, not a manufacturer figure.
 // Always defer to the spool label for a specific product.
 //
 // `settings[].key` links a row to the slicer glossary (src/data/glossary.js);
@@ -13,18 +15,18 @@ const S = {
   bambuTable: { label: 'Bambu Lab wiki: filament material table', url: 'https://wiki.bambulab.com/en/general/filament-guide-material-table' },
   prusamentDb: { label: 'Prusament print settings (SimplyPrint filament DB)', url: 'https://simplyprint.io/filaments/prusament' },
   prusaPlaTds: { label: 'Prusament PLA technical data sheet', url: 'https://cdn.shopify.com/s/files/1/1745/6181/files/PRUSA_PLA_TechSheet_ENG.pdf' },
-  prusaPetgTds: { label: 'Prusament PETG technical data sheet', url: 'https://www.3dprintergear.com.au/assets/files/technical-data-sheet%20(1).pdf' },
+  prusaPetgTds: { label: 'Prusament PETG technical data sheet', url: 'https://cdn.shopify.com/s/files/1/1745/6181/files/PETG_TechSheet_ENG.pdf' },
   esunDb: { label: 'eSUN print settings (SimplyPrint filament DB)', url: 'https://simplyprint.io/filaments/esun-3d' },
   esunPlus: { label: 'eSUN PLA+ product page', url: 'https://3dprintingcanada.com/products/red-esun-pla-filament-1-75mm-1kg' },
-  fiberlogyPctg: { label: 'Fiberlogy PCTG print settings', url: 'https://fiberlogy.com/en/fiberlogy-filaments/pctg/' },
+  fiberlogyPctg: { label: 'Fiberlogy PCTG product page', url: 'https://fiberlogy.com/en/filaments/pctg-en/pctg-pctg-en/' },
   afPctg: { label: 'American Filament PCTG listing', url: 'https://www.gigaparts.com/american-filament-pctg-1-75mm-1kg-spool-gunmetal-gray-af.html' },
   polyAsaTds: { label: 'Polymaker PolyLite ASA TDS', url: 'https://cdn.shopify.com/s/files/1/0603/6609/files/PolyLite_ASA_TDS_V5.1.pdf' },
   polyAsa: { label: 'Polymaker PolyLite ASA product page', url: 'https://www.tinymachines3d.com/products/polylite-asa' },
   polyAbs: { label: 'Polymaker PolyLite ABS settings', url: 'https://www.th3dstudio.com/?p=428703' },
-  polyCopa: { label: 'Polymaker PolyMide CoPA product page', url: 'https://us-wholesale.polymaker.com/products/polymide-copa' },
-  polyPa612: { label: 'Polymaker PolyMide PA612-CF product page', url: 'https://us-wholesale.polymaker.com/products/polymide-pa612-cf' },
+  polyCopa: { label: 'Polymaker PolyMide CoPA TDS (PDF)', url: 'https://polymaker.com/wp-content/uploads/lana-downloads/PolyMide_CoPA_TDS_V5.4.pdf' },
+  polyPa612: { label: 'Polymaker Fiberon PA612-CF15 TDS (PDF)', url: 'https://fiberon.polymaker.com/wp-content/uploads/TDS_FIBERON-PA612-CF15_V1.1_EN.pdf' },
   bambuTpu: { label: 'Bambu TPU 85A / 90A product page', url: 'https://eu.store.bambulab.com/en-hr/products/tpu-85a-tpu-90a' },
-  bambuPc: { label: 'Bambu PC listing (TDS values)', url: 'https://welectron.com/Bambu-Lab-PC-Filament-on-Spool' },
+  bambuPc: { label: 'Bambu PC retailer listing', url: 'https://welectron.com/Bambu-Lab-PC-Filament-on-Spool' },
   s3dPla: { label: 'Simplify3D materials guide: PLA', url: 'https://www.simplify3d.com/resources/materials-guide/pla/' },
   s3dAbs: { label: 'Simplify3D materials guide: ABS', url: 'https://www.simplify3d.com/resources/materials-guide/abs/' },
   s3dPetg: { label: 'Simplify3D materials guide: PETG', url: 'https://www.simplify3d.com/resources/materials-guide/petg/' },
@@ -38,7 +40,7 @@ const S = {
   s3dMetal: { label: 'Simplify3D materials guide: Metal filled', url: 'https://www.simplify3d.com/resources/materials-guide/metal-filled/' },
   s3dWood: { label: 'Simplify3D materials guide: Wood filled', url: 'https://www.simplify3d.com/resources/materials-guide/wood-filled/' },
   s3dPva: { label: 'Simplify3D materials guide: PVA', url: 'https://www.simplify3d.com/resources/materials-guide/pva/' },
-  esunGlow: { label: 'eSUN glow-in-the-dark PLA listing', url: 'https://shapeshop.com.au/esun/38-esun-pla-luminous-glow-in-dark.html' },
+  esunGlow: { label: 'eSUN PLA Luminous (glow) product page', url: 'https://www.esun3d.com/epla-luminous-product/' },
   hipsMeta: { label: '3D META HIPS print settings', url: 'https://www.jbhifi.com.au/products/3d-meta-hips-3d-printing-filament-white' },
   pvaXometry: { label: 'Xometry: PVA filament settings', url: 'https://www.xometry.com/resources/3d-printing/pva-3d-printing-filament/' },
 }
@@ -70,7 +72,7 @@ export const filaments = [
       nozzle: 'brass',
       extruder: 'any',
       ventilation: 'none',
-      drying: { level: 'optional', temp: 50, hours: '4–8' },
+      drying: { level: 'optional', temp: 55, hours: '6–12' },
       notes: [
         'An enclosed printer can cause heat creep with PLA. Open the door or lid on enclosed machines when the bed is above roughly 45 °C.',
       ],
@@ -125,7 +127,7 @@ export const filaments = [
       nozzle: 'brass',
       extruder: 'any',
       ventilation: 'none',
-      drying: { level: 'optional', temp: 50, hours: '4–8' },
+      drying: { level: 'optional', temp: 50, hours: '8–12' },
       notes: ['"PLA+" is a marketing term. Compare the data sheets of two brands before assuming they behave alike.'],
     },
     settings: [
@@ -214,7 +216,7 @@ export const filaments = [
     summary: 'The everyday functional plastic: tougher and more heat-tolerant than PLA.',
     description:
       'A copolyester that is tougher, more flexible and more heat-tolerant than PLA, with good chemical and water resistance. Use it for functional parts, outdoor brackets, enclosures, planters and containers. It is less stiff than PLA, strings more, and sticks so well to smooth PEI that it can tear the sheet.',
-    temps: { nozzle: { min: 240, max: 260, sweet: 245 }, bed: { min: 70, max: 85, sweet: 75 } },
+    temps: { nozzle: { min: 240, max: 250, sweet: 245 }, bed: { min: 70, max: 80, sweet: 75 } },
     requirements: {
       enclosure: 'none',
       hotend: 'standard',
@@ -224,7 +226,7 @@ export const filaments = [
       drying: { level: 'recommended', temp: 65, hours: '6–8' },
       notes: [
         'On smooth PEI, use glue stick or a textured sheet as a release layer. Prusa notes glue for smooth PEI in its PETG data sheet.',
-        'The 240–260 °C range works on most stock hotends, but PTFE-lined hotends should stay near the low end.',
+        'Prusament allows up to 260 °C; 240–250 °C is where Prusament, Bambu and Simplify3D all agree. PTFE-lined hotends should stay near the low end.',
       ],
     },
     settings: [
@@ -273,7 +275,7 @@ export const filaments = [
     summary: 'A tougher, more heat-tolerant PETG relative.',
     description:
       'A copolyester closely related to PETG with much higher impact strength and better temperature resistance (American Filament lists Tg ≈ 85 °C). It prints a lot like PETG, just hotter. Use it for functional parts that need toughness without moving to an enclosure-only material: tool holders, mounts, snap fits and clear parts.',
-    temps: { nozzle: { min: 250, max: 270, sweet: 260 }, bed: { min: 70, max: 90, sweet: 80 } },
+    temps: { nozzle: { min: 250, max: 270, sweet: 260 }, bed: { min: 90, max: 100, sweet: 90 } },
     requirements: {
       enclosure: 'none',
       hotend: 'all-metal',
@@ -282,18 +284,18 @@ export const filaments = [
       ventilation: 'none',
       drying: { level: 'recommended', temp: 60, hours: '4–6' },
       notes: [
-        'Bonds very strongly to smooth PEI and glass. Fiberlogy recommends a release layer, and American Filament suggests textured PEI at about 70 °C.',
-        'Brand bed recommendations range from 70 to 110 °C. Start low on textured PEI and raise only if corners lift.',
+        'Fiberlogy lists a 90 °C bed on textured PEI, or smooth PEI / glass with an adhesive layer.',
+        'American Filament says 70 °C is enough on textured PEI and that hotter beds can make parts stick too well. If parts are hard to remove, try lower.',
       ],
     },
     settings: [
       { key: 'fan', label: 'Part cooling fan', value: '0–25% (Fiberlogy); raise only for overhangs' },
-      { key: 'speed', label: 'Print speed', value: 'Moderate (under ~100 mm/s per Fiberlogy)' },
-      { key: 'retraction', label: 'Retraction', value: 'Direct drive 1–2 mm · Bowden 4–6 mm (Fiberlogy)' },
-      { key: 'surface', label: 'Bed surface', value: 'Textured PEI, or a release layer (glue, tape) on smooth sheets' },
+      { key: 'speed', label: 'Print speed', value: 'Moderate; similar to PETG' },
+      { key: 'retraction', label: 'Retraction', value: 'Similar to PETG: direct drive about 1–2 mm, Bowden 4–6 mm' },
+      { key: 'surface', label: 'Bed surface', value: 'Textured PEI, or smooth PEI / glass with an adhesive layer (Fiberlogy)' },
     ],
     strengths: [
-      { tag: 'Very tough', text: 'Fiberlogy claims impact strength up to 20× that of PETG.' },
+      { tag: 'Very tough', text: 'High impact strength. Fiberlogy markets it as up to 20× PETG, comparing against a generic PETG figure rather than a matched test.' },
       { tag: 'Heat resistance', text: 'Higher glass transition than PETG.' },
       { tag: 'Clarity', text: 'Clear grades are very transparent.' },
       { tag: 'No enclosure needed', text: 'Low shrinkage; prints on open-frame printers.' },
@@ -307,7 +309,7 @@ export const filaments = [
     problems: [
       { id: 'stringing', fix: 'Dry first, then lower the nozzle toward 250 °C and tune retraction.' },
       { id: 'bed-adhesion', fix: 'Over-adhesion is the risk. Use textured PEI or glue as a release, and don’t over-squish.' },
-      { id: 'warping', fix: 'Rare. If large flat parts lift, raise the bed 5–10 °C and add a brim.' },
+      { id: 'warping', fix: 'Rare. If large flat parts lift, add a brim before raising the bed.' },
     ],
     alternatives: [
       { id: 'petg', note: 'Cheaper, more colors, prints 10–20 °C cooler; less tough.' },
@@ -329,7 +331,7 @@ export const filaments = [
     summary: 'Heat-resistant, tough, and smoothable with acetone. Warps without an enclosure.',
     description:
       'The plastic used in LEGO bricks and many appliance housings. It handles heat and impact far better than PLA and can be vapor-smoothed with acetone for a glossy finish. Use it for automotive interior parts, enclosures, tool handles and anything that lives near heat indoors. It shrinks as it cools, so large parts warp and crack unless printed in a warm enclosure.',
-    temps: { nozzle: { min: 245, max: 260, sweet: 255 }, bed: { min: 90, max: 105, sweet: 100 } },
+    temps: { nozzle: { min: 245, max: 255, sweet: 250 }, bed: { min: 90, max: 100, sweet: 100 } },
     requirements: {
       enclosure: 'required',
       hotend: 'all-metal',
@@ -340,6 +342,7 @@ export const filaments = [
       notes: [
         'Styrene fumes: print in a ventilated room or with a filtered enclosure.',
         'Small parts can succeed without an enclosure, but anything larger than about a fist will usually warp or split.',
+        'Polymaker and Bambu list a 90–100 °C bed; Simplify3D goes to 110 °C. Polymaker allows the nozzle up to 265 °C.',
       ],
     },
     settings: [
@@ -362,7 +365,7 @@ export const filaments = [
       { tag: 'Layer cracking', text: 'Tall parts split if drafts cool one side.' },
     ],
     problems: [
-      { id: 'warping', fix: 'Close the enclosure, preheat for 10+ minutes, raise the bed toward 105 °C, and add a brim.' },
+      { id: 'warping', fix: 'Close the enclosure, preheat for 10+ minutes, run the bed at the top of its range (about 100 °C), and add a brim.' },
       { id: 'layer-separation', fix: 'Turn the part fan down or off and eliminate drafts.' },
       { id: 'bed-adhesion', fix: 'Clean the sheet with soap or IPA; use glue or ABS slurry on glass.' },
       { id: 'elephants-foot', fix: 'The hot bed makes this common. Use elephant-foot compensation.' },
@@ -385,9 +388,9 @@ export const filaments = [
     summary: 'ABS that survives the outdoors.',
     description:
       'Chemically close to ABS but with an acrylate rubber that resists UV and weathering. It prints with a slightly matte finish that hides layer lines. Use it for parts that live outside: garden fittings, car exterior trim, mailbox parts, camera mounts and signs.',
-    temps: { nozzle: { min: 245, max: 265, sweet: 255 }, bed: { min: 90, max: 110, sweet: 100 } },
+    temps: { nozzle: { min: 250, max: 260, sweet: 255 }, bed: { min: 90, max: 110, sweet: 100 } },
     requirements: {
-      enclosure: 'required',
+      enclosure: 'recommended',
       hotend: 'all-metal',
       nozzle: 'brass',
       extruder: 'any',
@@ -396,7 +399,7 @@ export const filaments = [
       notes: [
         'Polymaker’s rule of thumb: the larger the print (bigger than a fist), the more an enclosure is required.',
         'Styrene-based fumes: ventilate or filter.',
-        'Manufacturer ranges disagree: Polymaker lists 240–260 °C nozzle and a 75–95 °C bed, while Prusament lists 250–270 °C and 100–120 °C.',
+        'Manufacturer ranges disagree: Polymaker lists 240–260 °C nozzle and a 75–95 °C bed, Prusament 255–265 °C and 105–115 °C. The range here sits between them; follow your spool.',
       ],
     },
     settings: [
@@ -413,7 +416,7 @@ export const filaments = [
       { tag: 'Post-processing', text: 'Acetone-smoothable like ABS.' },
     ],
     weaknesses: [
-      { tag: 'Warping', text: 'Shrinks like ABS; needs an enclosure for anything sizable.' },
+      { tag: 'Warping', text: 'Shrinks like ABS; an enclosure is needed for anything sizable.' },
       { tag: 'Fumes', text: 'Styrene-based emissions; ventilate.' },
       { tag: 'Cost', text: 'Slightly pricier than ABS.' },
     ],
@@ -440,14 +443,14 @@ export const filaments = [
     summary: 'Lightweight, ABS-like, and dissolvable in limonene.',
     description:
       'A lightweight polystyrene most often used as a dissolvable support for ABS, since the two print at similar temperatures and HIPS dissolves in d-limonene. It is also printable on its own for lightweight models and props.',
-    temps: { nozzle: { min: 225, max: 240, sweet: 230 }, bed: { min: 95, max: 110, sweet: 100 } },
+    temps: { nozzle: { min: 230, max: 240, sweet: 235 }, bed: { min: 100, max: 110, sweet: 100 } },
     requirements: {
       enclosure: 'recommended',
       hotend: 'standard',
       nozzle: 'brass',
       extruder: 'any',
       ventilation: 'recommended',
-      drying: { level: 'recommended', temp: 65, hours: '4–6' },
+      drying: { level: 'recommended', temp: 80, hours: '5+' },
       notes: [
         'As a support it needs a multi-material printer (dual nozzle or filament changer).',
         'D-limonene is an irritant; dissolve parts in a ventilated area with gloves.',
@@ -493,7 +496,7 @@ export const filaments = [
     summary: 'The standard flexible filament: rubbery, durable, slow to print.',
     description:
       'A rubber-like filament that bends and compresses but springs back. 95A is the firmest common grade and the easiest flexible to print. Use it for phone cases, gaskets, bumpers, vibration dampers, drone guards and tire treads.',
-    temps: { nozzle: { min: 220, max: 235, sweet: 225 }, bed: { min: 30, max: 50, sweet: 40 } },
+    temps: { nozzle: { min: 225, max: 235, sweet: 230 }, bed: { min: 35, max: 45, sweet: 40 } },
     requirements: {
       enclosure: 'none',
       hotend: 'standard',
@@ -549,7 +552,7 @@ export const filaments = [
     summary: 'Squishy, grippy, and difficult to feed.',
     description:
       'Softer grades (90A, 85A and below, plus TPE blends) behave more like a rubber band than a hard rubber. Use them for grips, seals, squishy toys, cushioning, wearable straps and soft robot parts. The softer the filament, the more it buckles in the extruder, so printer hardware matters more than settings.',
-    temps: { nozzle: { min: 215, max: 235, sweet: 225 }, bed: { min: 30, max: 40, sweet: 35 } },
+    temps: { nozzle: { min: 225, max: 240, sweet: 230 }, bed: { min: 30, max: 35, sweet: 35 } },
     requirements: {
       enclosure: 'none',
       hotend: 'standard',
@@ -603,31 +606,32 @@ export const filaments = [
     summary: 'Tough, slippery, wear-resistant, and very thirsty.',
     description:
       'Polyamides are tough, slightly flexible, low-friction and wear resistant, which makes them a natural fit for gears, bushings, hinges, clips and tools. They absorb moisture quickly and must be kept dry. Bed temperature and enclosure needs vary widely by grade, so follow the spool.',
-    temps: { nozzle: { min: 250, max: 270, sweet: 260 }, bed: { min: 50, max: 80, sweet: 60 } },
+    temps: { nozzle: { min: 250, max: 270, sweet: 260 }, bed: { min: 25, max: 50, sweet: 40 } },
     requirements: {
       enclosure: 'recommended',
       hotend: 'all-metal',
       nozzle: 'brass',
       extruder: 'any',
       ventilation: 'recommended',
-      drying: { level: 'required', temp: 80, hours: '12' },
+      drying: { level: 'required', temp: 80, hours: '8–12' },
       notes: [
-        'Bed temperature varies widely by brand: Polymaker’s warp-free CoPA wants only 25–50 °C, while many generic nylons want 70–90 °C.',
+        'Bed temperature varies widely by grade. The range shown is Polymaker’s warp-free CoPA (25–50 °C); many generic nylons want 70–90 °C, so follow your spool.',
+        'Drying: Bambu dries its nylons at 80 °C for 8–12 h; Polymaker specifies 100 °C for 8 h for CoPA.',
         'Print from a dry box. Nylon can pick up enough moisture to print badly within hours in humid air.',
         'Glue (PVA) or a nylon-specific adhesive helps bed adhesion.',
       ],
     },
     settings: [
       { key: 'fan', label: 'Part cooling fan', value: 'Off (Polymaker); small amounts for bridges' },
-      { key: 'speed', label: 'Print speed', value: 'Slow (30–50 mm/s per Polymaker)' },
-      { key: 'retraction', label: 'Retraction', value: 'Direct drive ~3 mm · Bowden ~6 mm (Polymaker CoPA)' },
+      { key: 'speed', label: 'Print speed', value: 'Moderate; start around 50 mm/s and raise once layers bond well' },
+      { key: 'retraction', label: 'Retraction', value: '3–6 mm (Polymaker CoPA TDS)' },
       { key: 'anneal', label: 'Annealing', value: 'Optional: Polymaker anneals CoPA at 80 °C for 6 h for full strength' },
       { key: 'surface', label: 'Bed surface', value: 'PEI or glass with PVA glue / nylon adhesive' },
     ],
     strengths: [
       { tag: 'Tough', text: 'Exceptional impact and fatigue resistance.' },
       { tag: 'Wear resistance', text: 'Low friction; good for gears and sliding parts.' },
-      { tag: 'Heat resistance', text: 'Polymaker lists a Vicat softening point of 180 °C for CoPA.' },
+      { tag: 'Heat resistance', text: 'Polymaker lists CoPA at HDT 111 °C (0.45 MPa) / 70 °C (1.8 MPa); it keeps its shape under light load well above PETG temperatures.' },
       { tag: 'Chemical resistance', text: 'Resists oils, fuels and many solvents.' },
     ],
     weaknesses: [
@@ -637,7 +641,7 @@ export const filaments = [
       { tag: 'Cost', text: 'More expensive than common filaments.' },
     ],
     problems: [
-      { id: 'wet-filament', fix: 'Dry for 8–12 h at about 80 °C and print straight from a dry box.' },
+      { id: 'wet-filament', fix: 'Dry before printing (Bambu: 80 °C for 8–12 h) and print straight from a dry box.' },
       { id: 'warping', fix: 'Use glue, a brim, and an enclosure. Check whether your grade wants a cool or hot bed.' },
       { id: 'stringing', fix: 'Almost always moisture. Dry before touching retraction.' },
       { id: 'bed-adhesion', fix: 'Use PVA glue or a nylon-specific adhesive. Nylon sticks poorly to bare PEI.' },
@@ -647,9 +651,9 @@ export const filaments = [
       { id: 'pctg', note: 'Far easier to print and very tough; lower heat and wear resistance.' },
       { id: 'pp', note: 'Better for living hinges; weaker and harder to stick down.' },
     ],
-    ratings: { ease: 2, strength: 4, toughness: 5, heat: 4, uv: 2, flex: 3, moisture: 5, cost: 3 },
-    heatNote: 'Vicat ≈ 180 °C (Polymaker CoPA)',
-    sources: [S.polyCopa, S.s3dNylon],
+    ratings: { ease: 2, strength: 4, toughness: 5, heat: 3, uv: 2, flex: 3, moisture: 5, cost: 3 },
+    heatNote: 'HDT ≈ 111 °C at 0.45 MPa (Polymaker CoPA)',
+    sources: [S.polyCopa, S.bambuTable, S.s3dNylon],
   },
   {
     id: 'pc',
@@ -660,7 +664,7 @@ export const filaments = [
     summary: 'Very strong and heat resistant; the hardest common filament to print well.',
     description:
       'One of the strongest and most heat-resistant consumer filaments, with excellent impact resistance and optical clarity in clear grades. Use it for functional parts near heat: lamp housings, under-hood brackets, light diffusers, and high-load mechanical parts. It needs high temperatures, a hot enclosure and dry filament.',
-    temps: { nozzle: { min: 265, max: 280, sweet: 270 }, bed: { min: 100, max: 110, sweet: 105 } },
+    temps: { nozzle: { min: 270, max: 285, sweet: 275 }, bed: { min: 100, max: 110, sweet: 105 } },
     requirements: {
       enclosure: 'required',
       hotend: 'all-metal',
@@ -669,7 +673,7 @@ export const filaments = [
       ventilation: 'recommended',
       drying: { level: 'required', temp: 80, hours: '8' },
       notes: [
-        'Bambu lists its PC as "enclosure printers required."',
+        'Bambu recommends an enclosed printer for its PC and advises against open-frame printers.',
         'PC blends (PC-ABS, Prusament PC Blend) print a little cooler and warp less than pure PC.',
       ],
     },
@@ -678,7 +682,7 @@ export const filaments = [
       { key: 'speed', label: 'Print speed', value: 'Moderate; slow first layers' },
       { key: 'retraction', label: 'Retraction', value: 'Direct drive ~1 mm · Bowden 3–5 mm' },
       { key: 'brim', label: 'Brim', value: 'Recommended' },
-      { key: 'surface', label: 'Bed surface', value: 'PEI with glue (Bambu lists 90–110 °C with glue)' },
+      { key: 'surface', label: 'Bed surface', value: 'PEI with glue stick (Bambu wiki lists 100–120 °C with glue)' },
     ],
     strengths: [
       { tag: 'Heat resistance', text: 'Heat deflection about 117 °C (Bambu PC).' },
@@ -699,11 +703,11 @@ export const filaments = [
     alternatives: [
       { id: 'asa', note: 'Easier to print with good outdoor durability; lower heat resistance.' },
       { id: 'pctg', note: 'No enclosure needed and very tough; much lower heat resistance.' },
-      { id: 'pa-cf', note: 'Stiffer and warps less; needs a hardened nozzle and drying.' },
+      { id: 'pa-cf', note: 'Stiffer, warps less and more heat resistant; needs a hardened nozzle and drying.' },
     ],
     ratings: { ease: 1, strength: 5, toughness: 5, heat: 5, uv: 3, flex: 2, moisture: 4, cost: 3 },
     heatNote: 'HDT ≈ 117 °C (Bambu PC)',
-    sources: [S.bambuPc, S.prusamentDb, S.s3dPc],
+    sources: [S.bambuGuide, S.bambuTable, S.prusamentDb, S.s3dPc, S.bambuPc],
   },
   {
     id: 'pp',
@@ -806,7 +810,7 @@ export const filaments = [
       { id: 'pla', note: 'No hardened nozzle needed, cheaper, a bit less stiff.' },
       { id: 'petg-cf', note: 'More heat and impact resistant, a little harder to print.' },
     ],
-    ratings: { ease: 4, strength: 3, toughness: 2, heat: 2, uv: 2, flex: 1, moisture: 2, cost: 3 },
+    ratings: { ease: 4, strength: 3, toughness: 2, heat: 1, uv: 2, flex: 1, moisture: 2, cost: 3 },
     heatNote: 'Close to PLA',
     sources: [S.bambuTable, S.bambuGuide, S.s3dCf],
   },
@@ -819,15 +823,15 @@ export const filaments = [
     summary: 'Stiffer, matte PETG that strings less. Needs a hardened nozzle.',
     description:
       'PETG with chopped carbon or glass fibers. It keeps PETG’s heat and chemical resistance while adding stiffness, a matte finish and, in most brands, less stringing. Use it for functional brackets, mounts, jigs and outdoor-adjacent parts that need to be rigid.',
-    temps: { nozzle: { min: 250, max: 270, sweet: 260 }, bed: { min: 70, max: 85, sweet: 75 } },
+    temps: { nozzle: { min: 255, max: 270, sweet: 260 }, bed: { min: 75, max: 85, sweet: 80 } },
     requirements: {
       enclosure: 'none',
       hotend: 'all-metal',
       nozzle: 'hardened',
       extruder: 'any',
       ventilation: 'none',
-      drying: { level: 'recommended', temp: 65, hours: '8' },
-      notes: ['Bambu lists 240–270 °C for PETG-CF and Prusament 255–275 °C; 250–270 °C is the overlap.'],
+      drying: { level: 'recommended', temp: 70, hours: '8' },
+      notes: ['Bambu lists 240–270 °C for PETG-CF and Prusament 255–275 °C; 255–270 °C is the overlap.', 'Bed: Bambu lists 60–80 °C and Prusament 80–100 °C. Start around 80 °C.'],
     },
     settings: [
       { key: 'fan', label: 'Part cooling fan', value: '20–50%' },
@@ -869,7 +873,7 @@ export const filaments = [
     summary: 'The strongest common consumer filament for functional parts.',
     description:
       'Nylon filled with chopped carbon fiber. It combines nylon’s toughness and heat resistance with high stiffness and much less warping than plain nylon. Use it for end-use mechanical parts, jigs and fixtures, automotive brackets and tooling.',
-    temps: { nozzle: { min: 270, max: 290, sweet: 280 }, bed: { min: 60, max: 100, sweet: 80 } },
+    temps: { nozzle: { min: 270, max: 290, sweet: 280 }, bed: { min: 90, max: 110, sweet: 100 } },
     requirements: {
       enclosure: 'recommended',
       hotend: 'all-metal',
@@ -878,15 +882,16 @@ export const filaments = [
       ventilation: 'recommended',
       drying: { level: 'required', temp: 80, hours: '8–12' },
       notes: [
-        'Bed temperature is very grade-dependent: Polymaker PA612-CF lists 25–50 °C, while Bambu lists 100–120 °C for PA6-CF.',
+        'Bed temperature is very grade-dependent. The range shown follows Bambu (90–110 °C with glue); Polymaker’s Fiberon PA612-CF15 wants only 40–50 °C. Follow your spool.',
+        'Polymaker dries PA612-CF15 at 100 °C for 10 h; Bambu dries its PA-CF at 80 °C for 8–12 h.',
         'Brittle and abrasive filaments can snap in or wear automatic filament-changer paths (Bambu wiki).',
       ],
     },
     settings: [
       { key: 'fan', label: 'Part cooling fan', value: 'Off to low' },
-      { key: 'speed', label: 'Print speed', value: 'Slow to moderate (Polymaker lists 30–60 mm/s)' },
-      { key: 'retraction', label: 'Retraction', value: 'Direct drive ~3 mm · Bowden ~6 mm (Polymaker)' },
-      { key: 'anneal', label: 'Annealing', value: 'Many grades recommend annealing (e.g. 80 °C for 6 h) for full properties' },
+      { key: 'speed', label: 'Print speed', value: 'Moderate; slower for first layers and fine detail' },
+      { key: 'retraction', label: 'Retraction', value: 'Similar to nylon: start around 1–3 mm on direct drive' },
+      { key: 'anneal', label: 'Annealing', value: 'Many grades recommend annealing for full properties (Polymaker: 100 °C for 16 h for PA612-CF15)' },
       { key: 'surface', label: 'Bed surface', value: 'Textured PEI or glue' },
     ],
     strengths: [
@@ -909,10 +914,10 @@ export const filaments = [
     alternatives: [
       { id: 'nylon', note: 'Tougher and more flexible, warps more, no hardened nozzle strictly required.' },
       { id: 'petg-cf', note: 'Easier: no drying ritual or enclosure. Lower heat resistance and strength.' },
-      { id: 'pc', note: 'Similar heat resistance, tougher, but warps far more.' },
+      { id: 'pc', note: 'Tougher and less abrasive, but lower heat resistance and it warps far more.' },
     ],
     ratings: { ease: 2, strength: 5, toughness: 4, heat: 5, uv: 3, flex: 1, moisture: 5, cost: 4 },
-    heatNote: 'High; improves with annealing',
+    heatNote: 'HDT ≈ 175 °C at 0.45 MPa (Fiberon PA612-CF15)',
     sources: [S.bambuTable, S.bambuGuide, S.polyPa612],
   },
   {
@@ -924,7 +929,7 @@ export const filaments = [
     summary: 'Looks, smells and sands like wood. Clog-prone in small nozzles.',
     description:
       'PLA blended with wood dust, cork or similar fibers for a wood-like look and feel. Varying the nozzle temperature changes the shade, giving a grain effect. Use it for decorative pieces, figurines, picture frames and props.',
-    temps: { nozzle: { min: 210, max: 225, sweet: 215 }, bed: { min: 50, max: 60, sweet: 55 } },
+    temps: { nozzle: { min: 210, max: 225, sweet: 215 }, bed: { min: 55, max: 60, sweet: 60 } },
     requirements: {
       enclosure: 'avoid',
       hotend: 'standard',
@@ -979,7 +984,7 @@ export const filaments = [
       ventilation: 'none',
       drying: { level: 'optional', temp: 50, hours: '4–6' },
       notes: [
-        'eSUN describes its glow filament as abrasive and strongly recommends a hardened nozzle.',
+        'eSUN calls its glow filament highly abrasive to nozzles and extruder gears and recommends a hardened steel or ruby nozzle.',
         'Metal-fill filaments are heavy; check that the spool holder runs freely.',
       ],
     },
@@ -1022,16 +1027,17 @@ export const filaments = [
     summary: 'Water-soluble support for PLA. Extremely moisture-sensitive.',
     description:
       'A support material that dissolves in water, so supports inside complex geometry wash away instead of being snapped off. It pairs best with PLA. It requires a multi-material printer and must be kept bone-dry.',
-    temps: { nozzle: { min: 185, max: 205, sweet: 190 }, bed: { min: 45, max: 60, sweet: 55 } },
+    temps: { nozzle: { min: 185, max: 200, sweet: 190 }, bed: { min: 45, max: 60, sweet: 55 } },
     requirements: {
       enclosure: 'none',
       hotend: 'standard',
       nozzle: 'brass',
       extruder: 'any',
       ventilation: 'none',
-      drying: { level: 'required', temp: 45, hours: '10' },
+      drying: { level: 'required', temp: 50, hours: 'several' },
       notes: [
         'Needs a dual-nozzle printer or a filament changer.',
+        'Xometry lists 45–55 °C for drying. Dry until extrusion stops popping, and dry again whenever it has been left out.',
         'Store and print from a sealed dry box. PVA can go soft and unprintable within hours in humid air.',
         'Don’t leave PVA sitting in a hot nozzle; it degrades and clogs.',
       ],
