@@ -31,7 +31,7 @@ Import the repo; Vercel detects Vite automatically (build `npm run build`, outpu
 
 ### Editing content
 
-- **Temperatures**: `min`/`max` is the overlap of the cited manufacturers' ranges; `sweet` is an editorial starting point and must sit inside the range (the validator checks).
+- **Temperatures**: `min`/`max` is the tightest window the cited sources support (the overlap between brands where one exists; otherwise the most widely cited source, with the disagreement noted in `requirements.notes`). `sweet` is an editorial starting point and must sit inside the range (the validator checks).
 - **Links between pages**: filaments reference problems by `id`, and problems reference filaments by `id`. The validator fails the build if an id doesn't exist.
 - **Slicer footnotes**: give a settings row or fix step a `key` that exists in `glossary.js`. If that entry has `unintuitive: true`, the asterisk and footnote appear automatically.
 - **Humidity bands** are editorial: no manufacturer publishes per-filament RH limits. Each filament gets a tier based on Bambu/UltiMaker guidance and measured water-absorption data, and `ideal`/`workable` are the upper RH limits of the first two bands (the validator checks they're in order).
