@@ -627,6 +627,119 @@ main {
   margin-top: 10px;
 }
 
+/* ── Humidity bar ────────────────────────────────────────── */
+.hbar {
+  display: grid;
+  gap: 6px;
+  margin-top: 6px;
+}
+.hbar__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin: 0;
+}
+.hbar__key {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.hbar__key dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.hbar__key dt::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+.hbar__key--ideal dt::before {
+  background: var(--ok);
+}
+.hbar__key--workable dt::before {
+  background: var(--warn);
+}
+.hbar__key--issues dt::before {
+  background: var(--bad);
+}
+.hbar__key dd {
+  margin: 0;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.hbar__track {
+  position: relative;
+  height: 14px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--rule-soft);
+}
+.hbar--compact .hbar__track {
+  height: 8px;
+  max-width: 220px;
+}
+.hbar__seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+.hbar__seg + .hbar__seg {
+  border-left: 2px solid var(--sheet);
+}
+.hbar__seg--ideal {
+  background: var(--ok);
+}
+.hbar__seg--workable {
+  background: var(--warn);
+}
+.hbar__seg--issues {
+  background: var(--bad);
+}
+.hbar__scale {
+  position: relative;
+  height: 2.6em;
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.hbar__tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+.hbar__tick:first-of-type {
+  transform: none;
+}
+.hbar__tick:last-child {
+  transform: translateX(-100%);
+}
+.hbar__indoor {
+  position: absolute;
+  top: 1.35em;
+  border-top: 2px solid var(--ink-2);
+  padding-top: 1px;
+  text-align: center;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.hum__tier {
+  margin: 0 0 4px;
+  max-width: 68ch;
+}
+.hum__note {
+  margin: 8px 0 0;
+  max-width: 68ch;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
 /* ── Detail panels ───────────────────────────────────────── */
 .detail {
   padding: 4px 20px 24px 18px;

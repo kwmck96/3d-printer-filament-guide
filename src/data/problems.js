@@ -404,7 +404,8 @@ export const problems = [
     ],
     steps: [
       { tier: 'maintenance', text: 'Dry the spool at the material’s drying temperature (see each filament) in a filament dryer or a well-controlled oven.' },
-      { tier: 'maintenance', text: 'Store spools in sealed bags or boxes with desiccant.' },
+      { tier: 'maintenance', text: 'Put a hygrometer where the spool sits and compare the reading with the humidity bands on that filament’s card. Room air is often 45–65% RH (Bambu), which is past the workable band for nylon, PVA and TPU.' },
+      { tier: 'maintenance', text: 'Store spools in sealed bags or boxes with desiccant, below 20% RH (Bambu, UltiMaker).' },
       { tier: 'hardware', text: 'For nylon, PVA and soft TPU, print straight from a heated dryer or dry box.' },
     ],
     mostLikely: ['pva', 'nylon', 'pa-cf', 'tpu-95a', 'tpu-soft', 'pc'],

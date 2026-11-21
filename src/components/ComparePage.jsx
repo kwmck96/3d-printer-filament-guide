@@ -2,6 +2,8 @@ import { filaments, filamentById, RATING_LABELS, RATING_INVERTED, CATEGORIES } f
 import { checkCompat } from '../lib/compat.js'
 import { fmtRange, fmtTemp } from '../lib/util.js'
 import HeatRuler from './HeatRuler.jsx'
+import HumidityBar from './HumidityBar.jsx'
+import { humidity } from '../data/humidity.js'
 import { StatusBadge, Difficulty, ProblemLink } from './Bits.jsx'
 
 const MAX = 3
@@ -45,6 +47,20 @@ export default function ComparePage({ ids, unit, printer, navigate }) {
     { label: 'Extruder', render: (f) => EXT[f.requirements.extruder] },
     { label: 'Ventilation', render: (f) => VENT[f.requirements.ventilation] },
     { label: 'Drying', render: (f) => `${DRY[f.requirements.drying.level]} · ${fmtTemp(f.requirements.drying.temp, unit)}, ${f.requirements.drying.hours} h` },
+    {
+      label: 'Humidity (RH)',
+      render: (f) => {
+        const h = humidity[f.id]
+        return (
+          <span className="stack">
+            <span className="tabular">
+              ≤{h.ideal}% ideal, {h.ideal}–{h.workable}% workable, &gt;{h.workable}% issues
+            </span>
+            <HumidityBar ideal={h.ideal} workable={h.workable} name={f.name} compact />
+          </span>
+        )
+      },
+    },
     { label: 'Heat resistance', render: (f) => f.heatNote },
     ...Object.entries(RATING_LABELS).map(([k, label]) => ({
       label,

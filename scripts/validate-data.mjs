@@ -2,6 +2,7 @@
 import { filaments, filamentById } from '../src/data/filaments.js'
 import { problems, problemById } from '../src/data/problems.js'
 import { glossary } from '../src/data/glossary.js'
+import { humidity, HUMIDITY_TIERS } from '../src/data/humidity.js'
 
 const errors = []
 const err = (m) => errors.push(m)
@@ -25,6 +26,13 @@ for (const p of problems) {
   ;(p.related || []).forEach((id) => problemById[id] || err(`${p.id}: unknown related ${id}`))
   if (!p.guides.length) err(`${p.id}: no photo guides`)
 }
+for (const f of filaments) {
+  const h = humidity[f.id]
+  if (!h) { err(`${f.id}: no humidity bands`); continue }
+  if (!HUMIDITY_TIERS[h.tier]) err(`${f.id}: unknown humidity tier ${h.tier}`)
+  if (!(h.ideal > 0 && h.ideal < h.workable && h.workable < 100)) err(`${f.id}: humidity bands out of order (${h.ideal}/${h.workable})`)
+}
+Object.keys(humidity).forEach((id) => filamentById[id] || err(`humidity: unknown filament ${id}`))
 const ids = [...filaments.map((f) => f.id), ...problems.map((p) => p.id)]
 ids.filter((id, i) => ids.indexOf(id) !== i).forEach((id) => err(`duplicate id ${id}`))
 

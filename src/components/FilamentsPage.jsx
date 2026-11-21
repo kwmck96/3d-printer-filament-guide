@@ -3,6 +3,8 @@ import { filaments, CATEGORIES } from '../data/filaments.js'
 import { checkCompat } from '../lib/compat.js'
 import { fmtTemp, normalize, toUnit } from '../lib/util.js'
 import HeatRuler from './HeatRuler.jsx'
+import HumidityBar from './HumidityBar.jsx'
+import { humidityBands, HUMIDITY_GENERAL } from '../data/humidity.js'
 import { SettingName, SlicerFootnotes, FilamentChip, ProblemLink, StatusBadge, Difficulty } from './Bits.jsx'
 
 const ENCLOSURE_TEXT = {
@@ -47,6 +49,8 @@ function FilamentDetail({ f, unit, navigate, compat }) {
   const [noz, nozD] = NOZZLE_TEXT[r.nozzle]
   const [ext, extD] = EXTRUDER_TEXT[r.extruder]
   const [vent, ventD] = VENT_TEXT[r.ventilation]
+  const hum = humidityBands(f.id)
+  const allSources = [...f.sources, ...hum.sources].filter((s, i, a) => a.findIndex((x) => x.url === s.url) === i)
   const hotend = r.hotend === 'all-metal' ? ['All-metal hotend', 'PTFE-lined hotends shouldn’t run this hot.'] : ['Standard', 'Stock hotends are fine.']
 
   return (
@@ -98,6 +102,21 @@ function FilamentDetail({ f, unit, navigate, compat }) {
             ))}
           </ul>
         )}
+      </section>
+
+      <section className="detail__section">
+        <h3>Humidity</h3>
+        <p className="hum__tier">
+          {hum.tierInfo.label}. {hum.tierInfo.exposure}
+        </p>
+        <HumidityBar ideal={hum.ideal} workable={hum.workable} name={f.name} />
+        {hum.note && <p className="hum__note">{hum.note}</p>}
+        <p className="hum__note">
+          <strong>Why these bands:</strong> {hum.tierInfo.basis}
+        </p>
+        <p className="fine">
+          Bands are for the air around the spool while it feeds a print. For storage longer than a day or two, aim below {HUMIDITY_GENERAL.storage}% RH for every filament (Bambu, UltiMaker). No manufacturer publishes per-filament humidity bands, so these are editorial estimates built from the sources listed below.
+        </p>
       </section>
 
       <section className="detail__section">
@@ -170,7 +189,7 @@ function FilamentDetail({ f, unit, navigate, compat }) {
       <section className="detail__section sources">
         <h4>Sources</h4>
         <ul>
-          {f.sources.map((s) => (
+          {allSources.map((s) => (
             <li key={s.url}>
               <a href={s.url} target="_blank" rel="noreferrer">
                 {s.label}

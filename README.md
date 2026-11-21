@@ -23,6 +23,7 @@ Import the repo; Vercel detects Vite automatically (build `npm run build`, outpu
 | --- | --- |
 | `src/data/filaments.js` | Every filament: temperatures, requirements, settings, strengths, weaknesses, common problems, alternatives, compare ratings, sources |
 | `src/data/problems.js` | Every print problem: causes, tiered fix steps, most/least prone filaments, per-filament advice, photo-guide links |
+| `src/data/humidity.js` | Relative-humidity bands per filament (ideal / workable / likely issues), the tier each filament belongs to, and the sources behind each tier |
 | `src/data/glossary.js` | Generic setting names → PrusaSlicer / OrcaSlicer / Cura names. `unintuitive: true` adds the asterisk and footnote |
 | `src/lib/compat.js` | "My printer" compatibility rules and presets |
 | `src/components/` | UI: list pages, compare page, heat ruler, printer panel |
@@ -33,6 +34,7 @@ Import the repo; Vercel detects Vite automatically (build `npm run build`, outpu
 - **Temperatures**: `min`/`max` is the overlap of the cited manufacturers' ranges; `sweet` is an editorial starting point and must sit inside the range (the validator checks).
 - **Links between pages**: filaments reference problems by `id`, and problems reference filaments by `id`. The validator fails the build if an id doesn't exist.
 - **Slicer footnotes**: give a settings row or fix step a `key` that exists in `glossary.js`. If that entry has `unintuitive: true`, the asterisk and footnote appear automatically.
+- **Humidity bands** are editorial: no manufacturer publishes per-filament RH limits. Each filament gets a tier based on Bambu/UltiMaker guidance and measured water-absorption data, and `ideal`/`workable` are the upper RH limits of the first two bands (the validator checks they're in order).
 - **Compare ratings** (`ratings` on each filament) are relative 1–5 judgments, not measurements. The UI says so.
 
 ## Maintenance
